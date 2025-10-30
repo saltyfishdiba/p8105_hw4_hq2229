@@ -29,7 +29,7 @@ data("ny_noaa", package = "p8105.datasets")
 
 wx <- ny_noaa %>%
   mutate(
-    tmax = as.numeric(tmax) / 10,   # tenths °C -> °C
+    tmax = as.numeric(tmax) / 10,   
     tmin = as.numeric(tmin) / 10,
     prcp = as.numeric(prcp),
     snow = as.numeric(snow),
@@ -81,18 +81,19 @@ plot_ly(
   text = ~paste0(
     "<b>Date:</b> ", date,
     "<br><b>Station:</b> ", id,
-    "<br><b>Tmin:</b> ", round(tmin, 1), " °C",
-    "<br><b>Tmax:</b> ", round(tmax, 1), " °C"
+    "<br><b>Tmin:</b> ", round(tmin, 1), " \u00B0C",
+    "<br><b>Tmax:</b> ", round(tmax, 1), " \u00B0C"
   ),
   hoverinfo = "text"
 ) %>%
-  layout(
-    title = "Daily Tmin vs Tmax (2010–2015 subset)",
-    xaxis = list(title = "Tmin (°C)"),
-    yaxis = list(title = "Tmax (°C)"),
-    legend = list(orientation = "h", x = 0, y = -0.15),
-    margin = list(l = 60, r = 20, t = 60, b = 60)
-  )
+layout(
+  title  = "Daily Tmin vs Tmax (2010–2015 subset)",
+  xaxis  = list(title = "Tmin (\u00B0C)"),
+  yaxis  = list(title = "Tmax (\u00B0C)"),
+  legend = list(orientation = "h", x = 0, y = -0.15),
+  margin = list(l = 60, r = 20, t = 60, b = 60)
+)
+
 ```
 
 
