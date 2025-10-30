@@ -12,10 +12,11 @@ navbar:
   right:
     - icon: fab fa-github
       href: "https://github.com/saltyfishdiba/"
-    - icon: fa fa-envelope
-      href: "hq2229@cumc.columbia.edu"
+    - icon: fas fa-envelope
+      href: "mailto:hq2229@cumc.columbia.edu"
     - icon: fab fa-linkedin
       href: "https://www.linkedin.com/in/tom-qin-47ba74339/"
+
 output:
   html_document:
     theme: cosmo
