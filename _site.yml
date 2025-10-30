@@ -1,5 +1,6 @@
 name: "p8105-hw4-ht"
-output_dir: "."
+output_dir: "docs"   
+
 navbar:
   title: "Hantang Qin"
   left:
