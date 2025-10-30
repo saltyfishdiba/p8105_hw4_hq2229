@@ -9,7 +9,7 @@ output:
 
 # Education
 - **Columbia University, Mailman School of Public Health** — M.S. in Biostatistics (2025–2027)
-- **UIUC** — B.S. in Statistics & Geographic Information Science (2021–2025)
+- **University of Illinois Urbana-Champaign** — B.S. in Statistics & Geographic Information Science (2021–2025)
 
 # Experience
 - **Research Assistant**, Spatial Air Pollution Exposure Modeling  
