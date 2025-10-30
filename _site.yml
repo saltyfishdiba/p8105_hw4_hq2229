@@ -1,0 +1,24 @@
+name: "p8105-hw4-ht"
+output_dir: "."
+navbar:
+  title: "Hantang Qin"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Resume"
+      href: resume.html
+    - text: "Dashboard"
+      href: dashboard.html
+  right:
+    - icon: fab fa-github
+      href: "https://github.com/saltyfishdiba/"
+    - icon: fa fa-envelope
+      href: "hq2229@cumc.columbia.edu"
+    - icon: fab fa-linkedin
+      href: "https://www.linkedin.com/in/tom-qin-47ba74339/"
+output:
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    code_folding: "hide"

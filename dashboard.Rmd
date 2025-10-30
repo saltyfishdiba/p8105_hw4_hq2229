@@ -1,0 +1,171 @@
+Here’s the full, updated Rmd (Plot 1 = scatter; Plot 2 = annual precipitation bars; Plot 3 = snowfall box plot with y ≤ 700). Paste over your file and knit.
+
+
+---
+title: "NOAA Weather — Flexdashboard (Plotly)"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    theme: cosmo
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(plotly)
+library(flexdashboard)
+library(p8105.datasets)
+library(lubridate)
+library(RColorBrewer)
+set.seed(8105)
+```
+
+## Data
+
+```{r}
+data("ny_noaa", package = "p8105.datasets")
+
+wx <- ny_noaa %>%
+  mutate(
+    tmax = as.numeric(tmax) / 10,   # tenths °C -> °C
+    tmin = as.numeric(tmin) / 10,
+    prcp = as.numeric(prcp),
+    snow = as.numeric(snow),
+    snwd = as.numeric(snwd),
+    date = as.Date(date)
+  ) %>%
+  filter(date >= as.Date("2010-01-01"), date < as.Date("2016-01-01")) %>%
+  mutate(
+    year  = year(date),
+    month = month(date, label = TRUE, abbr = TRUE) |> factor(ordered = TRUE)
+  )
+
+wx_sample <- wx %>%
+  filter(!is.na(tmax), !is.na(tmin)) %>%
+  sample_n(size = min(120000, nrow(.)))
+
+month_cols <- brewer.pal(12, "Set3")[seq_len(nlevels(wx$month))]
+names(month_cols) <- levels(wx$month)
+
+annual_prcp <- ny_noaa %>%
+  mutate(prcp = as.numeric(prcp), date = as.Date(date), year = year(date)) %>%
+  group_by(year) %>%
+  summarize(total_prcp = sum(prcp, na.rm = TRUE), .groups = "drop") %>%
+  arrange(year)
+
+snow_stations <- ny_noaa %>%
+  mutate(snow = as.numeric(snow)) %>%
+  filter(!is.na(snow), snow >= 0) %>%
+  count(id, sort = TRUE) %>%
+  slice_head(n = 6) %>%
+  pull(id)
+
+snow_box <- ny_noaa %>%
+  mutate(snow = as.numeric(snow)) %>%
+  filter(id %in% snow_stations, !is.na(snow), snow >= 0) %>%
+  mutate(id = factor(id, levels = snow_stations))
+```
+
+## Row
+
+## Column {data-width=65}
+
+### Plot 1 — Scatter (Tmin vs Tmax)
+
+```{r}
+plot_ly(
+  wx_sample,
+  x = ~tmin, y = ~tmax,
+  type = "scattergl", mode = "markers",
+  marker = list(size = 4, opacity = 0.45),
+  color = ~month, colors = unname(month_cols),
+  text = ~paste0(
+    "<b>Date:</b> ", date,
+    "<br><b>Station:</b> ", id,
+    "<br><b>Tmin:</b> ", round(tmin, 1), " °C",
+    "<br><b>Tmax:</b> ", round(tmax, 1), " °C"
+  ),
+  hoverinfo = "text"
+) %>%
+  layout(
+    title = "Daily Tmin vs Tmax (2010–2015 subset)",
+    xaxis = list(title = "Tmin (°C)"),
+    yaxis = list(title = "Tmax (°C)"),
+    legend = list(orientation = "h", x = 0, y = -0.15),
+    margin = list(l = 60, r = 20, t = 60, b = 60)
+  )
+```
+
+## Column {data-width=35}
+
+### Plot 2 — Total Annual Precipitation
+
+```{r}
+plot_ly(
+  annual_prcp,
+  x = ~year,
+  y = ~total_prcp,
+  type = "bar",
+  marker = list(
+    color = ~year,
+    colorscale = "Viridis",
+    showscale = TRUE,
+    colorbar = list(title = "year")
+  ),
+  hovertemplate = paste(
+    "<b>Year:</b> %{x}",
+    "<br><b>Total precipitation:</b> %{y:.0f} mm",
+    "<extra></extra>"
+  )
+) %>%
+  layout(
+    title = "Total Annual Precipitation",
+    xaxis = list(title = "Year"),
+    yaxis = list(title = "Total Precipitation (mm)")
+  )
+```
+
+### Plot 3 — Box Plot (Snowfall, y ≤ 700)
+
+```{r}
+
+stations <- c(
+  "US1NYAB0001","US1NYAB0006","US1NYAB0010",
+  "US1NYAB0016","US1NYAB0017","US1NYAB0021","US1NYAB0022"
+)
+
+snow_df <- ny_noaa %>%
+  mutate(snow = as.numeric(snow)) %>%
+  filter(id %in% stations, !is.na(snow), snow != 0)
+
+q99 <- quantile(snow_df$snow, 0.99, na.rm = TRUE)
+
+snow_df <- snow_df %>%
+  mutate(id = forcats::fct_reorder(id, snow, .fun = median))
+
+pal <- RColorBrewer::brewer.pal(max(3, length(levels(snow_df$id))), "Set2")
+names(pal) <- levels(snow_df$id)
+
+plot_ly(
+  snow_df,
+  x = ~id, y = ~snow,
+  type = "box",
+  color = ~id, colors = unname(pal),
+  boxpoints = "outliers",
+  jitter = 0, pointpos = 0,
+  line = list(width = 2),
+  boxmean = TRUE
+) %>%
+  layout(
+    title = "Snowfall Distribution",
+    xaxis = list(title = "Station ID", tickangle = -45),
+    yaxis = list(title = "Snowfall (mm)", range = c(0, q99)),
+    showlegend = TRUE
+  )
+
+
+```
+
+```
+```

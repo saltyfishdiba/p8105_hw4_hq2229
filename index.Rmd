@@ -1,0 +1,23 @@
+---
+title: "Welcome"
+output: 
+  html_document:
+    toc: false
+    theme: cosmo
+---
+
+# Hi, I'm Hantang 👋
+
+I'm a Biostatistics MS student interested in spatial statistics, satellite air pollution, and interactive visualization.
+
+This site hosts my **P8105 Homework 4** submission:
+
+- **[Resume](resume.html)** — brief academic + professional background  
+- **[Interactive Flexdashboard](dashboard.html)** — Plotly dashboard using the `nyc_airbnb` dataset from `p8105.datasets`
+
+### Contact
+- GitHub: <https://github.com/saltyfishdiba/>  
+- Email: <hq2229@cumc.columbia.edu>  
+- LinkedIn: <https://www.linkedin.com/in/tom-qin-47ba74339/>
+
+> Built as an R Markdown website following course guidance on site structure and interactivity.

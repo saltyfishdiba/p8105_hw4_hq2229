@@ -1,0 +1,31 @@
+---
+title: "Resume"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    theme: cosmo
+---
+
+# Education
+- **Columbia University, Mailman School of Public Health** — M.S. in Biostatistics (2025–2027)
+- **UIUC** — B.S. in Statistics & Geographic Information Science (2019–2025)
+
+# Experience
+- **Research Assistant**, Spatial Air Pollution Exposure Modeling  
+  - Worked with TEMPO/TROPOMI NO₂ datasets, geospatial resampling, and R-INLA/FRK smoothing.
+  - Built reproducible R/Python workflows and interactive visualizations.
+
+- **Data Science Projects**  
+  - Exploratory dashboards in Plotly / flexdashboard.  
+  - Emphasis on reproducibility (Git, R Projects, relative paths).
+
+# Skills
+- **R** (tidyverse, {sf}, {terra}, {plotly}, {flexdashboard})  
+- **Python** (pandas, geopandas, xarray, rasterio)  
+- **Statistics** (GLM, mixed models, spatial models), **GIS**, **Reproducible Research**
+
+# Links
+- GitHub: <https://github.com/YOUR_GH_USERNAME>  
+- Email: <your_uni@cumc.columbia.edu>  
+- LinkedIn: <https://www.linkedin.com/in/YOUR_LINKEDIN>
