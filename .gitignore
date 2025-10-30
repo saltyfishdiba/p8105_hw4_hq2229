@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+_site/
+docs/
+*/.ipynb_checkpoints/
+*.html
+*.nb.html
+*.png
+*.pdf
+*.csv
+*.rds
